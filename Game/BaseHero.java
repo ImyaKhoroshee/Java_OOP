@@ -10,6 +10,7 @@
     private boolean delivery;
     private boolean magic = true;
     private String name;
+    private String status;
 
     public BaseHero() {}    // конструктор без параметров должен быть обязательно
     
@@ -43,6 +44,9 @@
 
     public boolean getMagic() {return magic;}
     public void setMagic(boolean magic) {this.magic = magic;}
+
+    public String getStatus() {return status;}
+    public void setStatus(String status) {this.status = status;}
 
     public String justInfo(){
         return String.format(this.getClass() + "\nName: " + getName() + "\nAttack: " + getAttack() + "\nDefence: " + getDefence() + 
