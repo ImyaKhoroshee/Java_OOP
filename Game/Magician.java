@@ -27,7 +27,15 @@ class Magician extends BaseHero { // Magician это наследник BaseHero
     
     public boolean status() {return status.equals("active");}
     
+    @Override
     public void step() {
-    
+        int i = new Random().nextInt(super.list.size());
+        BaseHero p = super.list.get(i);
+        if (!p.status.equals("Die.")){
+            super.list.get(i).crntHealth -= damage.x;
+            if (super.list.get(i).crntHealth >= super.list.get(i).health) {
+                super.list.get(i).crntHealth = super.list.get(i).health;
+            }
+        }
     }
 }
