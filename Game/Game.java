@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
+import java.util.Random;
+import java.util.Scanner;
 
 /*
  *                  Крестьянин       Разбойник       Снайпер     Колдун     Копейщик	Арбалетчик	    Монах
@@ -19,104 +20,88 @@ import java.util.ListIterator;
 
  */
 
-public class Game extends BaseHero {            // Game это наследник BaseHero
+public class Game { 
     public static void main(String[] args) {
-        List<Peasant> peasant = new ArrayList<>();
-        while (peasant.size() < 5) {
-            peasant.add(new Peasant());                             // создали 5 новых крестьян с возможностями как указано в классе в основном конструкторе
-        }
-        ListIterator<Peasant> listIter = peasant.listIterator();
-        while(listIter.hasNext()) {
-            System.out.println(listIter.next().getName());
+        int step = 1;
+        List<BaseHero> darkSide = new ArrayList<BaseHero>();
+        List<BaseHero> whiteSide = new ArrayList<BaseHero>();
+
+        darkSide.add(new Peasant(darkSide, 0,0));
+        darkSide.add(new Robber(darkSide, 0,0));
+        darkSide.add(new Sniper(darkSide, 0,0));
+        darkSide.add(new Magician(darkSide, 0,0));
+        
+        Random rnd = new Random();
+        
+        for (int i = 0; i < 6; i++) {
+            switch (rnd.nextInt(4)){
+                case 0:
+                    darkSide.add(new Peasant(darkSide, 0,0));
+                    break;
+                case 1:
+                    darkSide.add(new Robber(darkSide, 0,0));
+                    break;
+                case 2:
+                    darkSide.add(new Sniper(darkSide, 0,0));
+                    break;
+                default:
+                    darkSide.add(new Magician(darkSide, 0,0));
+            }
         }
 
-        List<Magician> magician = new ArrayList<>();
-        while (magician.size() < 5) {
-            magician.add(new Magician());
-        }
-        ListIterator<Magician> iter = magician.listIterator();
-        while(iter.hasNext()) {
-            System.out.println(iter.next().getName());
+        whiteSide.add(new Peasant(whiteSide, 0,0));
+        whiteSide.add(new Priest(whiteSide, 0,0));
+        whiteSide.add(new Crossbowman(whiteSide, 0,0));
+        whiteSide.add(new Spearsman(whiteSide, 0,0));
+
+        for (int i = 0; i < 6; i++) {
+            switch (rnd.nextInt(4)){
+                case 0:
+                    whiteSide.add(new Peasant(whiteSide, 0,0));
+                    break;
+                case 1:
+                    whiteSide.add(new Priest(whiteSide, 0,0));
+                    break;
+                case 2:
+                    whiteSide.add(new Crossbowman(whiteSide, 0,0));
+                    break;
+                default:
+                    whiteSide.add(new Spearsman(whiteSide, 0,0));
+            }
         }
 
-        List<Robber> robber = new ArrayList<>();
-        while (robber.size() < 5) {
-            robber.add(new Robber());
+        if (step == 1 ){
+            System.out.println("First step");
+        } else {
+            System.out.println("Step:" + Integer.toString(step));
         }
-        ListIterator<Robber> itr = robber.listIterator();
-        while(itr.hasNext()) {
-            System.out.println(itr.next().getName());
+        System.out.println("--------------------------------------------");
+        System.out.println("Dark side\t\t\t\t\t\tWhite side");
+        for (int i = 0; i < darkSide.size(); i++) {
+            if (darkSide.get(i).returnCondition().length() > 27) {
+                System.out.println(darkSide.get(i).returnCondition() + "\t:\t" + whiteSide.get(i).returnCondition());
+            } else {
+                System.out.println(darkSide.get(i).returnCondition() + "\t\t:\t\t" + whiteSide.get(i).returnCondition());
+            }
         }
 
-        List<Sniper> sniper = new ArrayList<>();
-        while (sniper.size() < 5) {
-            sniper.add(new Sniper());
+        Scanner in = new Scanner(System.in);
+        while (true) {
+            String txt = in.nextLine();
+            if (txt.equals("next")){
+                for (int i = 0; i < darkSide.size(); i++) {
+                    darkSide.get(i).step();
+                    whiteSide.get(i).step();
+                    if (darkSide.get(i).returnCondition().length() > 27) {
+                        System.out.println(darkSide.get(i).returnCondition() + "\t:\t" + whiteSide.get(i).returnCondition());
+                    } else {
+                        System.out.println(darkSide.get(i).returnCondition() + "\t\t:\t" + whiteSide.get(i).returnCondition());
+                    }
+                }
+            }
+            if (txt.equals("quit")) {break;}
         }
-        ListIterator<Sniper> i = sniper.listIterator();
-        while(i.hasNext()) {
-            System.out.println(i.next().getName());
-        }
-        List<Spearsman> spearsman = new ArrayList<>();
-        while (spearsman.size() < 5) {
-            spearsman.add(new Spearsman());
-        }
-        ListIterator<Spearsman> element = spearsman.listIterator();
-        while(element.hasNext()) {
-            System.out.println(element.next().getName());
-        }
-        List<Priest> priest = new ArrayList<>();
-        while (priest.size() < 5) {
-            priest.add(new Priest());
-        }
-        ListIterator<Priest> elmnt = priest.listIterator();
-        while(elmnt.hasNext()) {
-            System.out.println(elmnt.next().getName());
-        }
-        List<Crossbowman> crossbowman = new ArrayList<>();
-        while (crossbowman.size() < 5) {
-            crossbowman.add(new Crossbowman());
-        }
-        ListIterator<Crossbowman> el = crossbowman.listIterator();
-        while(el.hasNext()) {
-            System.out.println(el.next().getName());
-        }
-       
-        System.out.println(peasant.get(0).justInfo() + "\n");
-        System.out.println(crossbowman.get(0).justInfo()+ "\n");
-        System.out.println(magician.get(0).justInfo()+ "\n");
-        System.out.println(priest.get(0).justInfo()+ "\n");
-        System.out.println(robber.get(0).justInfo()+ "\n");
-        System.out.println(sniper.get(0).justInfo()+ "\n");
-        System.out.println(spearsman.get(0).justInfo());   
+
     }
 
-    @Override
-    public float hit() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public float getHit(float damage) {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public boolean status() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean changePosition() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public String returnCondition() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }

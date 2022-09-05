@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.Random;
+
 /**
 * Класс Монах
 */
@@ -6,63 +9,34 @@ class Priest extends BaseHero  {            // Priest это наследник 
     /**
         * Монах - основной контруктор без параметров
     */
-    public Priest() {
+    public Priest(List<BaseHero> side, int x, int y) {
 
-        super.setName("Zhenya");
-        super.setAttack(6);
-        super.setDefence(3);
-        super.setShoot(16);
-        super.setDamage(2, 3); 
-        super.setHealth(10);
-        super.setSpeed(4);
-        super.setDelivery(false);
-        super.setMagic(false);
-        
-    }
-    /**
-     * Монах - доп контруктор с параментом имя и скорость
-     */
-    public Priest(String name, int speed) {
-        super.setName(name);
-        super.setSpeed(speed);
-    }
-
-    /**
-     * Монах - доп контруктор с параментом защита и атака
-     */
-    public Priest(int defence, int attack) {
-        super.setDefence(defence);
-        super.setAttack(attack);
+        super(side);
+        name = "Priest";
+        attack = 6;
+        defence = 3;
+        shoot = 16;
+        damage = new Vector2(-4, -4);
+        crntHealth = 30;
+        health = 30;
+        speed = 4;
+        delivery = false;
+        magic = false;
+        status = "stand";
+        position = new Vector2(x, y);
     }
     
-    @Override
-    public float hit() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public float getHit(float damage) {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public boolean status() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean changePosition() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public String returnCondition() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    public boolean status() {return status.equals("active");}
     
+    @Override
+    public void step() {
+        int i = new Random().nextInt(super.list.size());
+        BaseHero p = super.list.get(i);
+        if (!p.status.equals("Die.")){
+            super.list.get(i).crntHealth -= damage.x;
+            if (super.list.get(i).crntHealth >= super.list.get(i).health) {
+                super.list.get(i).crntHealth = super.list.get(i).health;
+            }
+        }
+    }
 }

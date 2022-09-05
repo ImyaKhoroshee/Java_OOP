@@ -1,57 +1,43 @@
- public abstract class BaseHero implements Actions { // реализуем все методы интерфейса Actions
+import java.util.List;
+
+public abstract class BaseHero implements HeroInterface { // реализуем все методы интерфейса Actions
     
-    private int attack;      // protected виден в самом классе и его наследниках                       
-    private int defence;                            
-    private int shoot;                              
-    private int damageLow;
-    private int damageHigh;           
-    private int health;
-    private int speed;
-    private boolean delivery;
-    private boolean magic = true;
-    private String name;
-    private String status;
-
-    public BaseHero() {}    // конструктор без параметров должен быть обязательно
+    protected int attack;      // protected виден в самом классе и его наследниках                       
+    protected int defence;                            
+    protected int shoot;                                        
+    protected int health;
+    protected int crntHealth;
+    protected int speed;
+    protected boolean delivery;
+    protected boolean magic = true;
+    protected String name;
+    protected String status;
+    protected Vector2 damage;
+    protected Vector2 position;
     
-    public String getName() {return String.format(name);}
-    public void setName(String name) {this.name = name;}
+    protected List<BaseHero> getList() {return list;}
+
+    protected List<BaseHero> list;
+
+    public BaseHero(List<BaseHero> side){list = side;}
+
+    @Override
+    public String returnCondition() {return name + " H:" + crntHealth + " D:" + defence + " A:" + attack + " " + status;}
     
-    public int getAttack() {return attack;}
-    public void setAttack(int attack) {this.attack = attack;}
-
-    public int getDefence() {return defence;}
-    public void setDefence(int defence) {this.defence = defence;}
-
-    public int getShoot() {return shoot;}
-    public void setShoot(int shoot) {this.shoot = shoot;}
-
-    public int getDamageLow() {return damageLow;}
-    public int getDamageHigh() {return damageHigh;}
-    public void setDamage(int damageLow, int damageHigh) {
-        this.damageLow = damageLow;
-        this.damageHigh = damageHigh;
+    @Override
+    public boolean status() {
+        // TODO Auto-generated method stub
+        return false;
     }
 
-    public int getHealth() {return health;}
-    public void setHealth(int health) {this.health = health;}
-
-    public int getSpeed() {return speed;}
-    public void setSpeed(int speed) {this.speed = speed;}
-
-    public boolean getDelivery() {return delivery;}
-    public void setDelivery(boolean delivery) {this.delivery = delivery;}
-
-    public boolean getMagic() {return magic;}
-    public void setMagic(boolean magic) {this.magic = magic;}
-
-    public String getStatus() {return status;}
-    public void setStatus(String status) {this.status = status;}
-
-    public String justInfo(){
-        return String.format(this.getClass() + "\nName: " + getName() + "\nAttack: " + getAttack() + "\nDefence: " + getDefence() + 
-                            "\nShoot: " + getShoot() + "\nHealth: " + getHealth() + "\nDamageLow: " + getDamageLow() +
-                            "\nDamageHigh: " + getDamageHigh() + "\nSpeed: " + getSpeed() + "\nDelivery: " + getDelivery() +
-                            "\nMagic: " + getMagic());
+    @Override
+    public boolean changePosition() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+    @Override
+    public void step() {
+        // TODO Auto-generated method stub
+        
     }
 }
