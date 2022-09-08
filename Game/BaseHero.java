@@ -2,9 +2,10 @@ import java.util.List;
 
 public abstract class BaseHero implements HeroInterface { // реализуем все методы интерфейса Actions
     
-    protected int attack;      // protected виден в самом классе и его наследниках                       
-    protected int defence;                            
-    protected int shoot;                                        
+    protected int attack;
+    protected int defence;
+    protected int shoot;
+    protected Vector2 damage;
     protected int health;
     protected int crntHealth;
     protected int speed;
@@ -12,32 +13,46 @@ public abstract class BaseHero implements HeroInterface { // реализуем 
     protected boolean magic = true;
     protected String name;
     protected String status;
-    protected Vector2 damage;
     protected Vector2 position;
-    
-    protected List<BaseHero> getList() {return list;}
-
     protected List<BaseHero> list;
-
     public BaseHero(List<BaseHero> side){list = side;}
-
     @Override
-    public String returnCondition() {return name + " H:" + crntHealth + " D:" + defence + " A:" + attack + " " + status;}
-    
-    @Override
-    public boolean status() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean changePosition() {
-        // TODO Auto-generated method stub
-        return false;
+    public String returnCondition() {
+        return name +
+                " H:" + crntHealth +
+                " D:" + defence +
+                " A:" + attack +
+                " Dmg:" + (int)(Math.abs((damage.x+damage.y)/2)) +
+                (shoot>0?" Shoots:" + shoot:"") + " " +
+                status;
     }
     @Override
-    public void step() {
-        // TODO Auto-generated method stub
-        
+    public void step() {}
+    @Override
+    public String getName() {return name;}
+    @Override
+    public Vector2 getPosition() {return position;}
+    public Vector2 getDistance(List<BaseHero> side){
+        int dist = Integer.MAX_VALUE;
+        int out = 0;
+        for (int i = 0; i < side.size(); i++) {
+            float dX = Math.abs(side.get(i).position.x - position.x);
+            float dY = Math.abs(side.get(i).position.y - position.y);
+            long tD = Math.round(Math.sqrt(dX*dX + dY*dY));
+            if (dist > tD) {
+                out = i;
+                dist = (int) tD;
+            }
+        }
+//        for (BaseHero baseHero : side) {
+//            float dX = Math.abs(baseHero.position.x - position.x);
+//            float dY = Math.abs(baseHero.position.y - position.y);
+//            long tD = Math.round(Math.sqrt(dX*dX + dY*dY));
+//            if (dist > tD) {
+//                out = side.indexOf(baseHero);
+//                dist = (int) tD;
+//            }
+//        }
+        return new Vector2(out, dist);
     }
 }

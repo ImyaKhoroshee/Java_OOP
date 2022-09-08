@@ -27,8 +27,5 @@ class Spearsman extends BaseHero {              // Spearsman это наслед
     
     public boolean status() {return status.equals("active");}
     
-    public void step() {
-    
-    }
     
 }

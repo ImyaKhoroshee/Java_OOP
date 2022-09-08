@@ -28,6 +28,14 @@ class Crossbowman extends BaseHero {        // Crossbowman это наследн
     public boolean status() {return status.equals("active");}
     
     public void step() {
-    
+        boolean insideFlag = false;
+        for (BaseHero basehero : super.list) {
+            if (basehero.name.equals("Peasant")) {
+                insideFlag = true;
+            }
+            if (insideFlag) {
+                shoot++;
+            }
+        }
     }
 }

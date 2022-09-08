@@ -27,7 +27,4 @@ class Robber extends BaseHero  {            // Robber это наследник 
     
     public boolean status() {return status.equals("active");}
     
-    public void step() {
-    
-    }
 }

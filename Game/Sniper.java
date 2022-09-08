@@ -26,8 +26,16 @@ class Sniper extends BaseHero {             // Sniper это наследник 
     }
     
     public boolean status() {return status.equals("active");}
-    
+
+    @Override
     public void step() {
-    
+        boolean tmp = false;
+        for (BaseHero bh: super.list) {
+            if (bh.name.equals("Peasant")) {
+                tmp = true;
+                break;
+            }
+        }
+        if (tmp) shoot++;
     }
 }
